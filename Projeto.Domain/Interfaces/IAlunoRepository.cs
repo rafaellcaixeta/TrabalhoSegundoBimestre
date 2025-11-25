@@ -1,0 +1,20 @@
+﻿using Projeto.Domain.Entidades;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Projeto.Domain.Interfaces
+{
+    public interface IAlunoRepository
+    {
+        public void Adicionar(Aluno aluno);
+        public void Atualizar(Aluno aluno);
+        public void Deletar( int idAluno);
+        public List<Aluno> ObterTodos();
+        public Aluno ObterPorId(int idAluno);
+        public Aluno ObterPorCpf(string cpf);
+        public Aluno ObterPorMatricula(string matricula);
+    }
+}

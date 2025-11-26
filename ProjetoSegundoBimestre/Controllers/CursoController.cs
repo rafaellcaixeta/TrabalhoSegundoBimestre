@@ -3,10 +3,10 @@ using Projeto.Domain.Entidades;
 using Projeto.Domain.Interfaces;
 using ProjetoSegundoBimestre.DTO.Request;
 
-namespace Projeto.API.Controllers
+namespace ProjetoSegundoBimestre.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/curso")]
     public class CursoController : ControllerBase
     {
         private readonly ICursoService _cursoService;
@@ -16,40 +16,69 @@ namespace Projeto.API.Controllers
             _cursoService = cursoService;
         }
 
-        [HttpPost]
-        public IActionResult Adicionar(NovoCursoRequest novoCursoRequest)
+        [HttpGet("obter-todos")]
+        public IActionResult ObterTodos()
         {
-            _cursoService.Adicionar(
-                CursoFactory.NovoCurso(
-                    0,
-                    novoCursoRequest.nome,
-                    novoCursoRequest.nomeCoordenador,
-                    true
-                    ));
+            var cursos = _cursoService.ObterTodos();
+
+            if (cursos == null || !cursos.Any())
+                return NotFound("Nenhum curso encontrado.");
+
+            return Ok(cursos);
+        }
+
+        [HttpGet("obter-por-id/{idCurso}")]
+        public IActionResult ObterPorId(int idCurso)
+        {
+            var curso = _cursoService.ObterPorId(idCurso);
+
+            if (curso == null)
+                return NotFound("Curso não encontrado.");
+
+            return Ok(curso);
+        }
+
+        [HttpPost("adicionar")]
+        public IActionResult Adicionar(NovoCursoRequest request)
+        {
+            var novoCurso = CursoFactory.NovoCurso(
+                request.idCurso,
+                request.nome,
+                request.nomeCoordenador,
+                request.ativo
+            );
+
+            _cursoService.Adicionar(novoCurso);
+
             return Ok("Curso adicionado com sucesso!");
         }
 
-        [HttpPut]
-        public IActionResult Atualizar(AtualizarCursoRequest atualizarCursoRequest)
+        [HttpPut("atualizar")]
+        public IActionResult Atualizar(AtualizarCursoRequest request)
         {
-            try
-            {
-                var cursoAtualizado = new Curso(
-                    atualizarCursoRequest.cursoID,
-                    atualizarCursoRequest.nome,
-                    atualizarCursoRequest.nomeCoordenador,
-                    atualizarCursoRequest.ativo
-                    );
+            var cursoExistente = CursoFactory.CursoExistente(
+                request.idCurso,
+                request.nome,
+                request.nomeCoordenador,
+                request.ativo
+            );
 
-                _cursoService.Atualizar(cursoAtualizado);
+            _cursoService.Atualizar(cursoExistente);
 
-                return Ok("Curso atualizado com sucesso!");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok("Curso atualizado com sucesso!");
+        }
 
+        [HttpDelete("remover/{idCurso}")]
+        public IActionResult Remover(int idCurso)
+        {
+            var curso = _cursoService.ObterPorId(idCurso);
+
+            if (curso == null)
+                return NotFound("Curso não encontrado.");
+
+            _cursoService.Deletar(idCurso);
+
+            return NoContent();
         }
     }
 }

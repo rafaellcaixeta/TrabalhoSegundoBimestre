@@ -55,23 +55,14 @@ namespace Projeto.Application.Service
             _matriculaRepository.Atualizar(matricula);
         }
 
-        public void Deletar(int idAluno, int idCurso)
+        public void Deletar(Matricula matricula)
         {
             var buscaMatricula = _matriculaRepository.ObterPorId(matricula.IdAluno, matricula.IdCurso);
 
             if (buscaMatricula == null)
                 throw new Exception("Matrícula não encontrada ou inexistente.");
 
-            _matriculaRepository.Deletar(Idmatricula);
-        }
-
-        public bool VerificarSeAtivo(int idAluno, int idCurso)
-        {
-            var matricula = _matriculaRepository.ObterPorId(idAluno, idCurso);
-            if (matricula == null)
-                throw new Exception("Matrícula não encontrada ou inexistente.");
-
-            return _matriculaRepository.VerificarSeAtivo(idAluno, idCurso);
+            _matriculaRepository.Deletar(matricula);
         }
 
         public Matricula ObterPorId(int idAluno, int idCurso)
@@ -84,7 +75,7 @@ namespace Projeto.Application.Service
             if (!matricula.Ativo)
                 throw new Exception("Matrícula inativa.");
 
-            return matricula;
+            return matricula;   
         }
 
         public List<Matricula> ObterPorAluno(int IdAluno)
@@ -106,12 +97,7 @@ namespace Projeto.Application.Service
             return matriculas;
         }
 
-        public List<Aluno> ObterTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        Aluno IMatriculaService.ObterPorId(int idAluno, int idCurso)
+        public List<Matricula> ObterTodos()
         {
             throw new NotImplementedException();
         }

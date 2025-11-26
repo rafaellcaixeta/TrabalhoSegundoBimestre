@@ -89,7 +89,7 @@ namespace Projeto.Data.Repositorios
                 cmd.Parameters.AddWithValue("@cpf", aluno.Cpf);
 
                 cmd.Parameters.AddWithValue("@matricula", aluno.Matricula);
-
+conn.Open();
                 cmd.Parameters.AddWithValue("@email", aluno.Email);
 
 

@@ -2,7 +2,7 @@
 {
     public class AtualizarAlunoRequest
     {
-        public string idAluno { get; set; }
+        public int idAluno { get; set; }
         public string nome { get; set; }
         public string cpf { get; set; }
         public string matricula { get; set; }

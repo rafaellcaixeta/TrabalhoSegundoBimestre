@@ -25,6 +25,7 @@ namespace Projeto.Domain.Entidades
         public string Email { get; private set; }
 
 
+
     }
 
     public static class AlunoFactory

@@ -1,42 +1,59 @@
-﻿using Projeto.Domain.Entidades;
-
-using Projeto.Domain.Interfaces;
-
-using Microsoft.Data.SqlClient;
-
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-
-
+using Projeto.Domain.Entidades;
+using Projeto.Domain.Interfaces;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Projeto.Data.Repositorios
-
 {
-
-    public class AlunoRepository : IAlunoRepository
-
+    public class CursoRepository : ICursoRepository
     {
-
         private readonly string _connectionString;
 
-
-
-        public AlunoRepository(IConfiguration configuration)
+        public CursoRepository(IConfiguration configuration)
 
         {
 
             _connectionString = configuration.GetConnectionString("DefaultConnection");
 
         }
-
-
-
-        public void Adicionar(Aluno aluno)
-
+        public void Adicionar(Curso curso)
         {
+            var sql = "INSERT INTO Curso (Nome,NomeCoordenador, Ativo) " +
 
-            var sql = "INSERT INTO Aluno (cpf,nome,email, matricula) " +
+             "VALUES (@Nome,@NomeCoordenador,@Ativo)";
 
-              "VALUES (@cpf, @nome,@email,@matricula)";
+            using (var conn = new SqlConnection(_connectionString))
+
+            using (var cmd = new SqlCommand(sql, conn))
+
+            {
+
+                cmd.Parameters.AddWithValue("@nome", curso.Nome);
+
+                cmd.Parameters.AddWithValue("@email", curso.NomeCoordenador);
+
+                cmd.Parameters.AddWithValue("@matricula", curso.Ativo);
+
+
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+
+            }
+        }
+
+        public void Atualizar(Curso curso)
+        {
+            var sql = "UPDATE Aluno SET Nome = @Nome, NomeCoordenador = @NomeCoordenador, Ativo = @Ativo" +
+
+             " WHERE IdCurso = @IdCurso";
 
 
 
@@ -46,13 +63,11 @@ namespace Projeto.Data.Repositorios
 
             {
 
-                cmd.Parameters.AddWithValue("@cpf", aluno.Cpf);
+                cmd.Parameters.AddWithValue("@Nome", curso.Nome);
 
-                cmd.Parameters.AddWithValue("@nome", aluno.Nome);
+                cmd.Parameters.AddWithValue("@NomeCoordenador", curso.NomeCoordenador);
 
-                cmd.Parameters.AddWithValue("@email", aluno.Email);
-
-                cmd.Parameters.AddWithValue("@matricula", aluno.Matricula);
+                cmd.Parameters.AddWithValue("@Ativo", curso.Ativo);
 
 
 
@@ -61,18 +76,11 @@ namespace Projeto.Data.Repositorios
                 cmd.ExecuteNonQuery();
 
             }
-
         }
 
-
-
-        public void Atualizar(Aluno aluno)
-
+        public void Deletar(int IdCurso)
         {
-
-            var sql = "UPDATE Aluno SET nome = @nome, cpf = @cpf,matricula=@matricula,email=@email " +
-
-              " WHERE idAluno = @idAluno";
+            var sql = "DELETE FROM Curso " + " WHERE IdCurso = @IdCurso";
 
 
 
@@ -82,15 +90,7 @@ namespace Projeto.Data.Repositorios
 
             {
 
-                cmd.Parameters.AddWithValue("@idAluno", aluno.IdAluno);
-
-                cmd.Parameters.AddWithValue("@nome", aluno.Nome);
-
-                cmd.Parameters.AddWithValue("@cpf", aluno.Cpf);
-
-                cmd.Parameters.AddWithValue("@matricula", aluno.Matricula);
-
-                cmd.Parameters.AddWithValue("@email", aluno.Email);
+                cmd.Parameters.AddWithValue("@IdCurso", IdCurso);
 
 
 
@@ -99,58 +99,11 @@ namespace Projeto.Data.Repositorios
                 cmd.ExecuteNonQuery();
 
             }
-
         }
 
-
-
-        public void Deletar(int idAluno)
-
+        public Curso ObterPorId(int IdCurso)
         {
-
-            var sql = "DELETE FROM Aluno " +
-
-             " WHERE idAluno = @idAluno";
-
-
-
-            using (var conn = new SqlConnection(_connectionString))
-
-            using (var cmd = new SqlCommand(sql, conn))
-
-            {
-
-                cmd.Parameters.AddWithValue("@idAluno", idAluno);
-
-
-
-                conn.Open();
-
-                cmd.ExecuteNonQuery();
-
-            }
-
-        }
-
-
-
-        public Aluno ObterPorCpf(string cpf)
-
-        {
-
-            throw new NotImplementedException();
-
-        }
-
-
-
-        public Aluno? ObterPorId(int idAluno)
-
-        {
-
-
-
-            var sql = "SELECT idAluno, nome, cpf,matricula,email FROM Aluno";
+            var sql = "SELECT IdCurso, Nome, NomeCoordenador, Ativo FROM Curso";
 
 
 
@@ -170,7 +123,7 @@ namespace Projeto.Data.Repositorios
 
                     {
 
-                        return new Aluno
+                        return new Curso
 
                         (
 
@@ -180,10 +133,7 @@ namespace Projeto.Data.Repositorios
 
                           reader.GetString(2),
 
-                          reader.GetString(3),
-
-                          reader.GetString(4)
-
+                          reader.GetBoolean(3)
                         );
 
                     }
@@ -193,28 +143,13 @@ namespace Projeto.Data.Repositorios
                 }
 
             }
-
         }
 
-
-
-        public Aluno ObterPorMatricula(string matricula)
-
+        public List<Curso> ObterTodos()
         {
+            var lista = new List<Curso>();
 
-            throw new NotImplementedException();
-
-        }
-
-
-
-        public List<Aluno> ObterTodos()
-
-        {
-
-            var lista = new List<Aluno>();
-
-            var sql = "SELECT idAluno, nome, cpf,matricula,email FROM Aluno";
+            var sql = "SELECT IdCurso, Nome, NomeCoordenador, Ativo FROM Curso";
 
             using (var conn = new SqlConnection(_connectionString))
 
@@ -232,7 +167,7 @@ namespace Projeto.Data.Repositorios
 
                     {
 
-                        var produto = new Aluno
+                        var produto = new Curso
 
                         (
 
@@ -242,9 +177,7 @@ namespace Projeto.Data.Repositorios
 
                           reader.GetString(2),
 
-                          reader.GetString(3),
-
-                          reader.GetString(4)
+                          reader.GetBoolean(3)
 
                         );
 
@@ -259,7 +192,6 @@ namespace Projeto.Data.Repositorios
             return lista;
 
         }
-
     }
-
+    
 }

@@ -138,60 +138,84 @@ namespace Projeto.Data.Repositorios
 
         {
 
-            throw new NotImplementedException();
-
-        }
-
-
-
-        public Aluno? ObterPorId(int idAluno)
-
-        {
-
-
-
-            var sql = "SELECT idAluno, nome, cpf,matricula,email FROM Aluno";
-
-
+            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM Aluno WHERE cpf = @cpf";
 
             using (var conn = new SqlConnection(_connectionString))
 
             using (var cmd = new SqlCommand(sql, conn))
 
             {
+                cmd.Parameters.AddWithValue("@cpf", cpf);
 
                 conn.Open();
 
                 using (var reader = cmd.ExecuteReader())
 
                 {
-
                     if (reader.Read())
 
                     {
-
                         return new Aluno
 
                         (
+                            reader.GetInt32(0),
 
-                          reader.GetInt32(0),
+                            reader.GetString(1),
 
-                          reader.GetString(1),
+                            reader.GetString(2),
 
-                          reader.GetString(2),
+                            reader.GetString(3),
 
-                          reader.GetString(3),
-
-                          reader.GetString(4)
-
+                            reader.GetString(4)
                         );
+                    }
+                }
+            }
 
+            return null;
+
+        }
+
+
+
+        public Aluno ObterPorId(int idAluno)
+
+        {
+
+            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM Aluno WHERE idAluno = @idAluno";
+
+            using (var conn = new SqlConnection(_connectionString))
+
+            using (var cmd = new SqlCommand(sql, conn))
+
+            {
+                cmd.Parameters.AddWithValue("@idAluno", idAluno);
+
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+
+                {
+                    if (reader.Read())
+
+                    {
+                        return new Aluno
+
+                        (
+                            reader.GetInt32(0),
+
+                            reader.GetString(1),
+
+                            reader.GetString(2),
+
+                            reader.GetString(3),
+
+                            reader.GetString(4)
+                        );
                     }
 
                     return null;
-
                 }
-
             }
 
         }
@@ -202,7 +226,42 @@ namespace Projeto.Data.Repositorios
 
         {
 
-            throw new NotImplementedException();
+            var sql = "SELECT idAluno, nome, cpf, matricula, email FROM Aluno WHERE matricula = @matricula";
+
+            using (var conn = new SqlConnection(_connectionString))
+
+            using (var cmd = new SqlCommand(sql, conn))
+
+            {
+                cmd.Parameters.AddWithValue("@matricula", matricula);
+
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+
+                {
+                    if (reader.Read())
+
+                    {
+                        return new Aluno
+
+                        (
+                            reader.GetInt32(0),
+
+                            reader.GetString(1),
+
+                            reader.GetString(2),
+
+                            reader.GetString(3),
+
+                            reader.GetString(4)
+
+                        );
+                    }
+                }
+            }
+
+            return null;
 
         }
 

@@ -1,3 +1,5 @@
+using Projeto.Application.Service;
+using Projeto.Data.Repositorios;
 using Projeto.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +11,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IAlunoRepository, IAlunoRepository>();
-builder.Services.AddScoped<IAlunoService, IAlunoService>();
+builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
+builder.Services.AddScoped<IAlunoService, AlunoService>();
 
- var app = builder.Build();
+builder.Services.AddScoped<ICursoRepository, CursoRepository>();
+builder.Services.AddScoped<ICursoService, CursoService>();
+
+builder.Services.AddScoped<IMatriculaRepository, MatriculaRepository>();
+builder.Services.AddScoped<IMatriculaService, MatriculaService>();
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

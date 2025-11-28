@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36429.23 d17.14
+VisualStudioVersion = 17.14.36429.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoSegundoBimestre", "ProjetoSegundoBimestre\ProjetoSegundoBimestre.csproj", "{B2158FF7-B4AB-4F23-9B38-8635431FD134}"
 EndProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - API", "04 - API", "{7E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projeto.Domain", "Projeto.Domain\Projeto.Domain.csproj", "{FF123AD7-BBF4-49F4-A1D6-95D17F863FDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoAplication", "ProjetoAplication\ProjetoAplication.csproj", "{27397ADB-04CE-4B08-9F06-2C440C39FB62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projeto.Application", "ProjetoAplication\Projeto.Application.csproj", "{27397ADB-04CE-4B08-9F06-2C440C39FB62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

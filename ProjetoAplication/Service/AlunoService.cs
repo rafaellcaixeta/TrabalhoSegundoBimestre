@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoAplication.Service
+namespace Projeto.Application.Service
 {
-    internal class AlunoService : IAlunoService
+    public class AlunoService : IAlunoService
     {
         private readonly IAlunoRepository _alunoRepository;
         
@@ -71,17 +71,22 @@ namespace ProjetoAplication.Service
 
         public Aluno ObterPorId(int idAluno)
         {
-            throw new NotImplementedException();
+            return _alunoRepository.ObterPorId(idAluno);
         }
 
         public Aluno ObterPorMatricula(string matricula)
         {
-            throw new NotImplementedException();
+            return _alunoRepository.ObterPorMatricula(matricula);
         }
 
         public List<Aluno> ObterTodos()
         {
-            throw new NotImplementedException();
+            var listaAlunos = _alunoRepository.ObterTodos();
+
+            if (listaAlunos.Count == 0)
+                throw new Exception("Nenhum aluno encontrado.");
+
+            return _alunoRepository.ObterTodos();
         }
     }
 }

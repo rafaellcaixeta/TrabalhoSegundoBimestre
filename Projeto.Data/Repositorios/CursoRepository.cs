@@ -36,9 +36,9 @@ namespace Projeto.Data.Repositorios
 
                 cmd.Parameters.AddWithValue("@nome", curso.Nome);
 
-                cmd.Parameters.AddWithValue("@email", curso.NomeCoordenador);
+                cmd.Parameters.AddWithValue("@NomeCoordenador", curso.NomeCoordenador);
 
-                cmd.Parameters.AddWithValue("@matricula", curso.Ativo);
+                cmd.Parameters.AddWithValue("@Ativo", curso.Ativo);
 
 
 
@@ -51,7 +51,7 @@ namespace Projeto.Data.Repositorios
 
         public void Atualizar(Curso curso)
         {
-            var sql = "UPDATE Aluno SET Nome = @Nome, NomeCoordenador = @NomeCoordenador, Ativo = @Ativo" +
+            var sql = "UPDATE Curso SET Nome = @Nome, NomeCoordenador = @NomeCoordenador, Ativo = @Ativo" +
 
              " WHERE IdCurso = @IdCurso";
 
@@ -62,6 +62,8 @@ namespace Projeto.Data.Repositorios
             using (var cmd = new SqlCommand(sql, conn))
 
             {
+
+                cmd.Parameters.AddWithValue("@IdCurso", curso.IdCurso);
 
                 cmd.Parameters.AddWithValue("@Nome", curso.Nome);
 

@@ -42,7 +42,6 @@ namespace ProjetoSegundoBimestre.Controllers
         public IActionResult Atualizar(AtualizarMatriculaRequest request)
         {
             var matricula = MatriculaFactory.MatriculaExistente(
-
                 request.IdAluno,
                 request.IdCurso,
                 request.DataMatricula,

@@ -47,7 +47,7 @@ namespace Projeto.Application.Service
 
         public void Atualizar(Matricula matricula)
         {
-            var buscaMatricula = _matriculaRepository.ObterPorId(matricula.IdAluno, matricula.IdCurso);
+            var buscaMatricula = _matriculaRepository.ObterPorId(matricula.IdMatricula);
 
             if (buscaMatricula == null)
                 throw new Exception("Matrícula não encontrada ou inexistente.");
@@ -55,19 +55,19 @@ namespace Projeto.Application.Service
             _matriculaRepository.Atualizar(matricula);
         }
 
-        public void Deletar(Matricula matricula)
+        public void Deletar(int idMatricula)
         {
-            var buscaMatricula = _matriculaRepository.ObterPorId(matricula.IdAluno, matricula.IdCurso);
+            var buscaMatricula = _matriculaRepository.ObterPorId(idMatricula);
 
             if (buscaMatricula == null)
                 throw new Exception("Matrícula não encontrada ou inexistente.");
 
-            _matriculaRepository.Deletar(matricula);
+            _matriculaRepository.Deletar(idMatricula);
         }
 
-        public Matricula ObterPorId(int idAluno, int idCurso)
+        public Matricula ObterPorId(int idMatricula)
         {
-            var matricula = _matriculaRepository.ObterPorId(idAluno, idCurso);
+            var matricula = _matriculaRepository.ObterPorId(idMatricula);
 
             if (matricula == null)
                 throw new Exception("Matrícula não encontrada ou inexistente.");
@@ -97,19 +97,29 @@ namespace Projeto.Application.Service
             return matriculas;
         }
 
-        public List<Matricula> ObterTodos()
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Matricula> ObterPorIdAluno(int IdAluno)
         {
-            throw new NotImplementedException();
+            var matriculas = _matriculaRepository.ObterPorIdAluno(IdAluno);
+
+            if (matriculas == null || !matriculas.Any())
+                throw new Exception("Nenhuma matrícula encontrada para o aluno informado.");
+
+            return matriculas;
         }
 
         public List<Matricula> ObterPorIdCurso(int IdCurso)
         {
-            throw new NotImplementedException();
+            var matriculas = _matriculaRepository.ObterPorIdCurso(IdCurso);
+
+            if (matriculas == null || !matriculas.Any())
+                throw new Exception("Nenhuma matrícula encontrada para o curso informado.");
+
+            return matriculas;
+        }
+
+        public List<Matricula> ObterTodos()
+        {
+            return _matriculaRepository.ObterTodos();
         }
     }
 }

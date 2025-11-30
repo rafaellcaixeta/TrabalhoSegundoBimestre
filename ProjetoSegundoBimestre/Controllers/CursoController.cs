@@ -16,7 +16,7 @@ namespace ProjetoSegundoBimestre.Controllers
             _cursoService = cursoService;
         }
 
-        [HttpGet("obter-todos")]
+        [HttpGet("api/CursoController/obter_todos")]
         public IActionResult ObterTodos()
         {
             var cursos = _cursoService.ObterTodos();
@@ -38,7 +38,7 @@ namespace ProjetoSegundoBimestre.Controllers
             return Ok(curso);
         }
 
-        [HttpPost("adicionar")]
+        [HttpPost("api/CursoController/adicionar")]
         public IActionResult Adicionar(NovoCursoRequest request)
         {
             var novoCurso = CursoFactory.NovoCurso(
@@ -53,7 +53,7 @@ namespace ProjetoSegundoBimestre.Controllers
             return Ok("Curso adicionado com sucesso!");
         }
 
-        [HttpPut("atualizar")]
+        [HttpPut("api/CursoController/atualizar")]
         public IActionResult Atualizar(AtualizarCursoRequest request)
         {
             var cursoExistente = CursoFactory.CursoExistente(

@@ -9,12 +9,12 @@ namespace Projeto.Domain.Interfaces
 {
     public interface IMatriculaService
     {
-        public void Adicionar(Matricula matricula);
-        public void Atualizar(Matricula matricula);
-        public void Deletar(Matricula matricula);
-        public List<Matricula> ObterTodos();
-        public Matricula ObterPorId(int idAluno, int idCurso);
-        public List<Matricula> ObterPorIdAluno(int IdAluno);
-        public List<Matricula> ObterPorIdCurso(int IdCurso);
+        void Adicionar(Matricula matricula);
+        void Atualizar(Matricula matricula);
+        void Deletar(int idMatricula);
+        List<Matricula> ObterTodos();
+        Matricula ObterPorId(int idMatricula);
+        List<Matricula> ObterPorIdAluno(int idAluno);
+        List<Matricula> ObterPorIdCurso(int idCurso);
     }
 }

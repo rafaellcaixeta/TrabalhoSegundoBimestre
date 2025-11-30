@@ -33,7 +33,7 @@ namespace ProjetoSegundoBimestre.Controllers
             return Ok("Aluno adicionado com sucesso!");
         }
 
-        [HttpPut("api/AlunoC ontroller/atualizar")]
+        [HttpPut("api/AlunoController/atualizar")]
         public IActionResult Atualizar(AtualizarAlunoRequest atualizarAlunoRequest)
         {
             _alunoService.Atualizar(AlunoFactory.AlunoExistente(atualizarAlunoRequest.idAluno, atualizarAlunoRequest.nome, atualizarAlunoRequest.cpf, atualizarAlunoRequest.matricula, atualizarAlunoRequest.email));
